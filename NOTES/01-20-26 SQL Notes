@@ -55,6 +55,7 @@ ADD email VARCHAR(255);
 ----------
 Removes specific rows.
 Uses WHERE condition.
+
 DELETE FROM company_db.test_table
 WHERE id = 1;
 
