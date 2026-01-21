@@ -1,0 +1,102 @@
+ ---Three types of data---
+1. structured data
+2. unstructured data
+3. semi-structured data
+Database are used for storing structured data.
+--Database--
+collection of process data like coloumns and rows
+Database is created in Server and create storage system
+--How to communicate data in server?--
+dbms is an interface to connect to server, we write query to access the structured data.
+
+--how data is stored in sql---
+stored in a table i.e schema
+schema: table, views, stored procedures, functions
+
+--- SQL COMMANDS---
+1. DDL- DATA DEFINITION LANGUAUGE (defining a table, schema, database) (creating a table, alter, rename)
+2. DML- DATA MANIPULATIVE LANGUAGE( inserting, deleting, creating, update a table)
+3. DQL- DATA QUERY LANGUAGE (select command is used)
+4. TCL- TRANSACTION CONTROL LANGUAGE ( commit, rollback, begin transaction, set transaction)
+
+--SQL QUERY--
+
+1. CREATE DATABASE
+------------------
+CREATE DATABASE company_db;
+
+2. CREATE TABLE
+---------------
+CREATE TABLE company_db.test_table (
+    id INT,
+    name VARCHAR(100)
+);
+
+3. SELECT DATA
+--------------
+SELECT id FROM company_db.test_table;
+
+4. INSERT DATA INTO TABLE
+-------------------------
+INSERT INTO company_db.test_table (id, name)
+VALUES
+    (1, 'Alice'),
+    (2, 'Bob'),
+    (3, 'Charlie');
+
+5. ALTER TABLE
+---------------
+Add a new column to an existing table.
+
+ALTER TABLE company_db.test_table
+ADD email VARCHAR(255);
+
+6. DELETE
+----------
+Removes specific rows.
+Uses WHERE condition.
+DELETE FROM company_db.test_table
+WHERE id = 1;
+
+7. TRUNCATE
+------------
+Removes all data but table structure remains.
+TRUNCATE TABLE company_db.test_table;
+
+8. DROP
+--------
+Deletes the entire table.
+DROP TABLE company_db.test_table;
+
+-- SQL CONSTRAINTS – 
+
+PRIMARY KEY
+------------
+•⁠  ⁠Uniquely identifies each record in a table
+•⁠  ⁠Cannot contain NULL values
+•⁠  ⁠Only one primary key per table
+
+FOREIGN KEY
+------------
+•⁠  ⁠A field in one table that refers to the PRIMARY KEY in another table
+•⁠  ⁠Used to maintain referential integrity
+
+CONSTRAINTS
+------------
+Rules applied to columns to enforce data integrity.
+
+Common Constraints:
+-------------------
+1.⁠ ⁠NOT NULL
+   - Ensures the column cannot have NULL values
+
+2.⁠ ⁠UNIQUE
+   - Ensures all values in the column are different
+
+3.⁠ ⁠CHECK
+   - Ensures values satisfy a specific condition
+   - Example: age >= 18
+
+4.⁠ ⁠DEFAULT
+   - Sets a default value if no value is provided
+   - Example: country DEFAULT 'New York'
