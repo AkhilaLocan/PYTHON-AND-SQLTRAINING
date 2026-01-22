@@ -1,0 +1,47 @@
+# SQL Training Session 
+
+
+## SQL Concepts Reviewed
+
+- DDL: create tables, databases, modify columns
+- DML: insert, truncate, delete, update
+- DQL: select, filter, aggregate data
+
+## Constraints & Keys
+
+- NOT NULL, UNIQUE, CHECK, DEFAULT constraints explained
+- PRIMARY KEY: single per table, uniquely identifies rows
+- FOREIGN KEY: relates tables, can have many per table
+- Composite primary key possible, but still only one primary key definition
+
+## Query Techniques
+
+- SELECT \* vs. selecting specific columns
+- DISTINCT for unique values
+- WHERE clause for row‑level filtering
+- LIMIT to restrict result count
+- ORDER BY ASC/DESC for sorting
+
+## Wildcards & Pattern Matching
+
+- % matches any sequence of characters
+- \_ matches a single character position
+- Used with LIKE in WHERE conditions for start, end, or middle patterns
+
+## NULL Handling
+
+- IS NULL and IS NOT NULL to include/exclude missing values
+- Nulls affect ML model training; replace or filter as needed
+- Example: rental records with null return date indicate unreturned items
+
+## GROUP BY & HAVING
+
+- GROUP BY aggregates rows by one or more columns
+- HAVING filters aggregated results (e.g., totals &gt; 100)
+- Alias columns with AS for readability, but use original column names in HAVING
+
+## Order of Execution
+
+- Execution flow: **FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT**
+- Understanding this order prevents alias‑related errors in HAVING
+
