@@ -1,0 +1,46 @@
+# SQL Built-in Functions
+
+- Functions are pre‑written; no custom code needed.
+- Used for filtering, transforming, and formatting data at the SELECT level.
+- Common categories: string, numeric, date/time, and regex functions.
+
+## String Manipulation Functions
+
+- **Padding**: LPAD, RPAD add spaces or characters to reach a target length (e.g., make titles 20 chars).
+- **Substring**: SUBSTRING(col, start, length) extracts a portion of a string; start index is 1‑based in SQL.
+- **Concatenation**: CONCAT(col1, col2, ...) joins strings; useful for building emails or custom IDs.
+- **Reverse**: REVERSE(col) flips the character order.
+- **Length**: LENGTH(col) returns character count; often used in WHERE clauses.
+- **Replace**: REPLACE(col, 'A', 'X') swaps characters or patterns.
+
+## Position & Pattern Functions
+
+- **LOCATE**: finds the position of a character/sub‑string (e.g., locate '@' in email).
+- **SUBSTRING_INDEX**: splits a string at a delimiter and returns the part before/after it.
+- **CASE**: conditional logic in SELECT – CASE WHEN condition THEN value ELSE other END.
+- **REGEXP**: regular‑expression matching for dynamic pattern filtering (e.g., exclude three consecutive vowels).
+
+## Regex & Dynamic Queries
+
+- Regex enables fully dynamic text filters without hard‑coding positions.
+- Example: WHERE last_name REGEXP '^\[^aeiou\]{3}$' finds names without three consecutive vowels.
+- Use ^ for start, $ for end, \[\] for character sets, and !/^ inside brackets for negation.
+- Regex is also applied in Python scripts for PDF data extraction (OCR + pattern matching).
+
+## Numeric & Date/Time Functions
+
+- **Power**: POWER(col, n) raises a number to the n‑th power.
+- **Floor / Ceil**: round down (FLOOR) or up (CEIL) numeric results.
+- **Random**: RAND() generates a float 0‑1; combine with FLOOR(RAND()\*100) for integers.
+- **Casting**: CAST(col AS DECIMAL(6,2)) changes data type; may behave differently across MySQL vs. other SQL dialects.
+- **Date Diff**: DATEDIFF(date1, date2) returns days between dates.
+- **Extracting Parts**: YEAR(col), MONTH(col), DAYNAME(col), etc., for calendar analysis.
+
+## Grouping & Aggregation
+
+- Use GROUP BY on derived columns (e.g., LEFT(title, 2)) to count occurrences of similar prefixes/suffixes.
+- Aggregates: COUNT, SUM, AVG combined with GROUP BY for per‑customer or per‑day metrics.
+- Remember execution order: FROM → WHERE → SELECT; aliasing columns in SELECT cannot be used in the same SELECT’s WHERE clause.
+
+
+*Prepared for akhila – please refer to the action items and practice the listed functions before the next class.*
