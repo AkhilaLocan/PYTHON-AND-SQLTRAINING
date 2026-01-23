@@ -1,47 +1,92 @@
 # SQL Training Session 
 
-
-## SQL Concepts Reviewed
-
-- DDL: create tables, databases, modify columns
-- DML: insert, truncate, delete, update
-- DQL: select, filter, aggregate data
-
-## Constraints & Keys
-
-- NOT NULL, UNIQUE, CHECK, DEFAULT constraints explained
-- PRIMARY KEY: single per table, uniquely identifies rows
-- FOREIGN KEY: relates tables, can have many per table
-- Composite primary key possible, but still only one primary key definition
-
 ## Query Techniques
 
-- SELECT \* vs. selecting specific columns
+- SELECT For selecting specific columns
 - DISTINCT for unique values
 - WHERE clause for row‑level filtering
 - LIMIT to restrict result count
 - ORDER BY ASC/DESC for sorting
+- COUNT is used to get the total number of entries
 
-## Wildcards & Pattern Matching
+---EXAMPLE---
+SELECT COUNT(DISTINCT(TITLE)) FROM SAKILA.FILM;
 
-- % matches any sequence of characters
-- \_ matches a single character position
-- Used with LIKE in WHERE conditions for start, end, or middle patterns
+SELECT COUNT(TITLE) FROM SAKILA.FILM;
+
+SELECT first_name, last_name FROM SAKILA.FILM LIMIT 50;
+
+SELECT * FROM SAKILA.FILM WHERE RATING ='R' AND LENGTH >=91;
+
+SELECT * FROM SAKILA.FILM ORDER BY RENTAL_RATE DESC;
+
+------AND,OR----------
+SELECT * FROM SAKILA.FILM
+WHERE RATING ='PG' AND RENTA_DURATION = 4
+ORDER BY RENTAL_RATE ASC;
+
+SELECT * FROM SAKILA.FILM
+WHERE RATING ='PG' OR RENTA_DURATION = 4
+ORDER BY RENTAL_RATE ASC;
+
+-----some examples of NOT conditions------ 
+
+1)
+
+SELECT * FROM SAKILA.FILM
+WHERE NOT RENTAL_DURATION = 4
+ORDER BY RENTAL_RATE ASC;
+
+2)
+
+SELECT * FROM SAKILA.FILM
+WHERE RENTAL_DURATION != 4
+ORDER BY RENTAL_RATE ASC;
+
+3)
+
+SELECT * FROM SAKILA.FILM
+WHERE RENTAL_DURATION <> 4
+ORDER BY RENTAL_RATE ASC;
+
+## WILD CARDS
+- There are two wildcards poften used in conjuction with the LIKE operator
+- The % represent zero, one or multiple characters
+- The _ represent one, single character
+
+-----EXAMPLES----
+1. SELECT CITY FROM SAKILA.CITY WHERE CITY LIKE 'A%S';
+this query that starts with A and there could me anything in between and then it ends with S.
+
+2. SELECT CITY FROM SAKILA.CITY WHERE CITY LIKE '_S___D%';
+This query starts with one unknown character and then followed by S and then again three unknown characters and then D and it could end with % which means anything. 
+
 
 ## NULL Handling
 
 - IS NULL and IS NOT NULL to include/exclude missing values
-- Nulls affect ML model training; replace or filter as needed
 - Example: rental records with null return date indicate unreturned items
+
+------ BETWEEN KEYWORD -----  which can be used for range. 
+SELECT RENTAL_ID, INVENTORY_ID, CUSTOMER_ID, RETURN_DATE
+FROM SAKILA.RENTAL
+WHERE RETURN_DATE BETWEEN '2005-9-22' AND '2025-08-12';
 
 ## GROUP BY & HAVING
 
 - GROUP BY aggregates rows by one or more columns
 - HAVING filters aggregated results (e.g., totals &gt; 100)
-- Alias columns with AS for readability, but use original column names in HAVING
+- The keyword HAVING can not be used alone and has to be used with GROUP BY keywords alongside. 
+
+--EXAMPLE--
+SELECT CUSTOMER_ID, COUNT (*) AS COUNT
+FROM SAKILA.RENTAL
+GROUP BY CUSTOMER_ID
+HAVING COUNT (*) <= 30
+ORDER BY COUNT DESC;
 
 ## Order of Execution
 
 - Execution flow: **FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT**
-- Understanding this order prevents alias‑related errors in HAVING
+
 
