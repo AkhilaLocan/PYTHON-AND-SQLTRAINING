@@ -50,7 +50,7 @@ WHERE RENTAL_DURATION <> 4
 ORDER BY RENTAL_RATE ASC;
 
 ## WILD CARDS
-- There are two wildcards poften used in conjuction with the LIKE operator
+- There are two wildcards often used in conjuction with the LIKE operator
 - The % represent zero, one or multiple characters
 - The _ represent one, single character
 
@@ -90,3 +90,17 @@ ORDER BY COUNT DESC;
 - Execution flow: **FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT**
 
 
+### WHERE AND HAVING
+. WHERE filters rows before grouping/aggregation (GROUP BY) happens.
+•	HAVING filters groups/aggregated results after grouping, and it’s where you put conditions like COUNT(*) > 5 or SUM(amount) > 1000.
+---EXAMPLE----
+-- WHERE: filters rows before grouping
+SELECT *
+FROM orders
+WHERE status = 'PAID';
+
+-- HAVING: filters groups after aggregation
+SELECT customer_id, COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(*) > 5;
