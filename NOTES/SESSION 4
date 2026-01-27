@@ -1,0 +1,88 @@
+# SQL Subqueries and Cardinality Workshop
+
+## Action Items
+
+- Upload today’s class notes file for reference
+- Post second assignment on built‑in functions (8 questions)
+- Complete first subquery assignment; aim for 7 of 8 questions, attempt the 8th later
+- Review subquery examples; practice writing each of the three approaches (WHERE, SELECT, derived table)
+- Discuss any unclear subquery concepts with batch mates; schedule a quick sync
+- Prepare questions for next session on joins and CTEs
+
+## Subqueries – Overview
+
+- Used to fetch data from another table without a full join
+- Executed at query‑level, not materialized as a permanent table
+- Four main forms: basic, in WHERE, in SELECT, derived table
+- Helpful for filtering, adding computed columns, or creating temporary result sets
+
+## Basic Subquery Example
+
+- SELECT first_name, last_name FROM customer
+- WHERE address_id IN (SELECT address_id FROM address WHERE customer_id = 1)
+- Returns customers whose address matches the subquery result
+- Avoids pulling all address columns into the main result
+
+## Subquery in SELECT Clause
+
+- Add computed column: film_count = (SELECT COUNT(\*) FROM film_actor WHERE actor_id = a.actor_id)
+- Alias the subquery result for readability
+- Keeps main SELECT focused on primary table columns
+
+## Derived Table (Subquery as Table)
+
+- FROM (SELECT actor_id, COUNT(*) AS film_cnt FROM film_actor GROUP BY actor_id HAVING COUNT(*) &gt; 10) fa
+- JOIN derived table fa to actor a on a.actor_id = fa.actor_id
+- Returns actors with &gt;10 films and their counts only
+
+## Correlated Subqueries
+
+- Inner query references column from outer query (e.g., film_id = f.film_id)
+- Executed once per outer row, enabling row‑level calculations
+- Example: SELECT title, (SELECT COUNT(\*) FROM film_actor WHERE film_id = f.film_id) AS actor_cnt FROM film f
+
+## Limitations of Subqueries
+
+- Scope limited to the single query; cannot be accessed later
+- Complex nesting leads to hard‑to‑read, slower queries
+- Reusability low – duplicate logic needed for multiple uses
+- May return multiple rows causing “subquery returns more than one row” errors
+
+## Cardinality Relationships
+
+- Define how tables relate via primary‑foreign keys
+- Four types: one‑to‑one, one‑to‑many, many‑to‑one, many‑to‑many
+- Determines appropriate join strategy later
+
+## One‑to‑One Example
+
+- user ↔ user_profile (each user has a single profile record)
+- Join on user_id to fetch active/inactive status
+
+## One‑to‑Many Example
+
+- user → orders (one user can place many orders)
+- user_id repeats in order table, order_id stays unique
+
+## Many‑to‑One (Reverse View)
+
+- orders → user (many orders point to one user)
+
+## Many‑to‑Many Example
+
+- users ↔ friendships (bridge table with user_id, friend_id)
+- Self‑join on bridge table to list mutual friends
+
+## Upcoming Topics
+
+- Detailed join types (inner, left, right, cross, self)
+- How cardinality guides join selection
+- Introduction to Common Table Expressions (CTEs) as an alternative to nested subqueries
+
+## Session Logistics
+
+- Next class will cover joins and CTE execution order
+- Recordings not available for early sessions; rely on shared notes and peer explanations
+- Bring any unresolved subquery questions to the next meeting
+
+---
