@@ -1,0 +1,72 @@
+# SQL Joins and Normalization 
+
+## SQL Join Types
+
+- **INNER JOIN** – returns only rows with matching keys in both tables.
+- **LEFT JOIN** – all rows from left table + matching rows from right; non‑matches get NULL.
+- **RIGHT JOIN** – all rows from right table + matching rows from left; non‑matches get NULL.
+- **FULL OUTER JOIN** – all rows from both tables; use UNION in MySQL to simulate.
+- **CROSS JOIN** – Cartesian product of every row from each table.
+- **SELF JOIN** – a table joined to itself to relate rows within the same entity.
+
+## When to Use Each Join
+
+- Need only common records → **INNER JOIN**.
+- Want every record from primary entity (e.g., all students) and any related data → **LEFT JOIN**.
+- Want every record from secondary entity (e.g., all courses) and any related data → **RIGHT JOIN**.
+- Need a complete list from both sides, regardless of matches → **FULL OUTER JOIN** (or LEFT + RIGHT + UNION).
+- Need all possible combinations (e.g., test matrix) → **CROSS JOIN**.
+- Need hierarchical or peer relationships (e.g., manager‑employee, friends) → **SELF JOIN**.
+
+## Full Outer Join via UNION (MySQL)
+
+- MySQL lacks native FULL OUTER JOIN.
+- Combine a LEFT JOIN (all left rows) with a RIGHT JOIN (all right rows) using UNION to get the full set.
+- Example pattern:
+
+  ```sql
+  SELECT ... FROM A LEFT JOIN B ON A.id = B.id
+  UNION
+  SELECT ... FROM A RIGHT JOIN B ON A.id = B.id;
+  ```
+
+## Self Join Example
+
+- Table: staff with columns staff_id, store_id.
+- Goal: list staff pairs working in different stores.
+- Query pattern:
+
+  ```sql
+  SELECT s1.staff_id, s2.staff_id
+  FROM staff s1
+  JOIN staff s2 ON s1.store_id <> s2.store_id;
+  ```
+- Produces combinations of employees across stores without duplication.
+
+## Normalization Overview
+
+- **1NF** – each column holds atomic (indivisible) values; no comma‑separated lists.
+- **2NF** – eliminate partial dependencies; non‑key columns depend on the whole primary key.
+- **3NF** – remove transitive dependencies; non‑key columns depend only on the primary key.
+- Result: separate tables for customers, orders, products, etc., linked by foreign keys.
+
+## Benefits of Normalization
+
+- Reduces data duplication (e.g., one customer record, many orders).
+- Speeds up queries on large tables (e.g., 1 billion rows → fetch unique customers in seconds).
+- Simplifies maintenance and enforces data integrity via primary/foreign keys.
+
+## Query Design Tips
+
+- Choose join direction based on which side you need complete data from.
+- Use explicit ON conditions; order of tables doesn’t affect result for inner joins but matters for left/right joins.
+- For “no match” scenarios, a false condition like 1 = 0 forces a left join to return only left‑table rows.
+- WHERE EXISTS can replace an inner join when only existence matters.
+
+## Assignments & Next Steps
+
+- Practice writing joins with bridge tables (e.g., film, film_category, category).
+- Experiment with left vs. right join to retrieve all films vs. all categories.
+- Implement a full outer join using UNION for actor‑film data.
+- Review upcoming topics: views, temporary tables, stored procedures, advanced SQL patterns.
+- Attend the next session after lunch (energy and patience required).
