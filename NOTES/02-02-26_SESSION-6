@@ -1,0 +1,42 @@
+# SQL Query Evolution: CTEs, Temp Tables, Views
+
+ 
+## CTEs (Common Table Expressions) vs. Subqueries
+- Move subqueries into a `WITH` clause → separate, named CTE.  
+- Improves **readability** (clean main query) and **reusability** (same CTE can be joined multiple times).  
+- Scope limited to the single `SELECT/INSERT/UPDATE/DELETE` statement that follows.  
+- Cannot create a CTE alone; must be paired with a query.  
+- Errors appear if you try to run a CTE without an accompanying statement.  
+
+## Recursive CTEs
+- Use `WITH RECURSIVE` to mimic loops (e.g., generate numbers 1‑20).  
+- **Anchor member**: base row (e.g., `SELECT 1 AS n`).  
+- **Recursive member**: builds next row (`SELECT n+1 FROM numbers WHERE n < 20`).  
+- Executes as a single query; cannot be run independently.  
+- Helpful for date‑range generation, hierarchical data, or iterative calculations.  
+
+## Temporary Tables
+- Created with `CREATE TEMPORARY TABLE … AS SELECT …`.  
+- Exist **only for the session** (or until explicitly dropped).  
+- Stored in server memory, not as permanent objects in the database.  
+- Scope: session‑level → any query in the same session can read/write it.  
+- Useful for intermediate results without persisting data, but still duplicates data in memory.  
+
+## Views
+- Defined with `CREATE VIEW view_name AS SELECT …`.  
+- **Virtual table**: only the query definition is stored, not the data.  
+- Provides **data abstraction** – hide original column names, expose only needed columns.  
+- Increases **security** (restricts sensitive columns) and **scope** (accessible to any user with permission).  
+- Execution cost similar to running the underlying query each time (no materialized storage).  
+- Ideal for exposing clean, read‑only data to BI tools (Power BI, Tableau) or external applications.  
+
+## Scope, Reusability, and Complexity
+- **Subqueries** → query‑level scope, high complexity, low reuse.  
+- **CTEs** → query‑level scope, lower complexity, moderate reuse.  
+- **Temporary tables** → session‑level scope, higher memory use, good for repeated access within a session.  
+- **Views** → database‑level scope, no data duplication, best for cross‑session reuse and security.  
+-------------------------------------  
+- Execution time for a view is the same for creator and other users – the query runs each time.  
+- Views do not store data; they only store the query definition, reducing storage cost.  
+- Security through views: users see only the columns you expose, not underlying table structures.  
+- Recursive CTEs are analogous to loops in programming languages (for/while).  
