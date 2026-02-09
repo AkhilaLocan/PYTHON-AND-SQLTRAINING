@@ -43,4 +43,3 @@
 - Remember execution order: FROM → WHERE → SELECT; aliasing columns in SELECT cannot be used in the same SELECT’s WHERE clause.
 
 
-*Prepared for akhila – please refer to the action items and practice the listed functions before the next class.*
